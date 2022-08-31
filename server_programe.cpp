@@ -40,7 +40,7 @@ class data_base: public read_display//database class inherithing read
          
     public:
          static int employee_id;
-
+     //read()function to get the employee details
     void read()
     {
        cout<<"\nenter the name of the employee : ";
@@ -57,7 +57,7 @@ class data_base: public read_display//database class inherithing read
        cout<<"\nyour employee id is : "<<employee_id;
 
     }
-    void display()
+    void display()//display()function to display  employee details
     {
       cout<<"name : "<<name<<endl;
       cout<<"date of birth : "<<d_o_b.day<<"/"<<d_o_b.month<<"/"<<d_o_b.year<<endl;
@@ -68,12 +68,14 @@ class data_base: public read_display//database class inherithing read
     }
 
 };
-int data_base:: employee_id=132456;
+int data_base:: employee_id=132456;//allocating memory to sattic data member employee_id
 class attendance:public virtual data_base
+//attendance class derived from virtualdata_base class
 {  
     protected:
         int attendance_matrix[150][13][32];
         ofstream outfile;
+        //days function that returns no of days in a month
     public: int days(int m,int y)
             {
                 if(m==2 && y%4==0)
@@ -84,6 +86,7 @@ class attendance:public virtual data_base
                 return(31);
                 return(30);
             }
+            //compute function that returns the employee percentage of a given month and year
             float compute(int m, int y)
             {   
                 float percentage;
@@ -96,7 +99,7 @@ class attendance:public virtual data_base
                 
                 return percentage;          
             }
-            
+            //display function to display the attendance of employee of a given month and year i.e to display 'a' if absent or' p'if present
             void display(int m,int y)
             {  
                 char att='a';
@@ -116,7 +119,7 @@ class attendance:public virtual data_base
                     cout<<"\n";
                 }
             }
-            void mark_attendance()
+            void mark_attendance()//mark_attendance( ) function to mark attendance of the employee and update log details
             {
                int year,month,day,day_of_week;
                time_t now= time(0);
@@ -141,7 +144,7 @@ class attendance:public virtual data_base
 
 
             }
-            void checkout()
+            void checkout()//checkout ( ) function to update the checked out details
             {
                time_t now= time(0);
                char* log = ctime(&now);
@@ -158,16 +161,18 @@ class salary:public attendance, virtual data_base
 
 {
     
-    
+    //class salary derived publically from attendence class and virtual data_base class
     float basic,da,hra,lta,pf,esi,gross_sal,tax,salary,atd,newsalary;
-    public:void read_emp_details()
+    public:
+    //read_emp_details() function to read employee details
+    void read_emp_details()
     {
         // cout<<"Employee id:\n" ;
         // cin>>emp_id;
         cout<<"Enter basic salary:\n" ;
         cin>>basic;
     }
-    void find_net_salary()
+    void find_net_salary()//find_net_salary() function to find net salary of employee
     {
         da=(0.5*basic);
         hra=(0.4*basic)+da;
@@ -202,7 +207,7 @@ class salary:public attendance, virtual data_base
         // salary=newsalary;      
     }
 
-    void display_sal()
+    void display_sal()//display_sal() fuction to display the salary breakup and take home salary
     {
         cout<<"The Basic saalry is : "<<basic;
         cout<<"PF is : "<<pf;
@@ -216,19 +221,20 @@ class salary:public attendance, virtual data_base
 class menu:public salary
 {
      public:
-          void add_new_employee()
+          void add_new_employee()//class menu derived from salary class
           {
             data_base::read();
             read_emp_details();
             find_net_salary();
 
           } 
-          void display_employee_details()
+          void display_employee_details()//function to add new employee details
           {
             data_base::display();
 
           }
-          void display_attendance(){
+          void display_attendance()//function to display the attendance of particular month and year of employee
+          {
             int month,year;
             cout<<"\n enter the month and year : ";
             cin>>month>>year;
